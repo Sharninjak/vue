@@ -3,16 +3,32 @@
     <div class="profile-fetcher">
         <button class="logout-button" @click="logoutAndRedirect">Logout</button>
         <el-card>
+            <h3>Profile Information</h3>
             <div class="input-area">
-                <el-input v-model="userId" placeholder="Enter user ID"></el-input>
                 <el-button type="primary" @click="fetchProfile">Fetch Profile</el-button>
+                <el-input v-model="userId" placeholder="Enter user ID"></el-input>
             </div>
             <div class="output-area">
                 <el-card>
-                    <h3>Profile Information</h3>
-                    <pre>{{ profileInfo }}</pre>
+                    <div class="pre-scrollable">
+                        <pre>{{ profileInfo }}</pre>
+                    </div>
                 </el-card>
             </div>
+        </el-card>
+        <el-card>
+            <h3>User List</h3>
+            <div class="input-area">
+                <el-button type="primary" @click="listUser">Fetch all user</el-button>
+            </div>
+            <div class="output-area">
+                <el-card>
+                    <div class="pre-scrollable">
+                        <pre>{{ users }}</pre>
+                    </div>
+                </el-card>
+            </div>
+
         </el-card>
     </div>
 </template>
@@ -21,6 +37,8 @@
 import { ref } from 'vue';
 import { ElInput, ElButton, ElCard } from 'element-plus';
 import axios from 'axios';
+import { UserInfoByid } from './js/UserInfoByid';
+import { UserList } from './js/UserList';
 
 export default {
     name: 'Manage',
@@ -43,42 +61,14 @@ export default {
         },
     },
     setup() {
-        const userId = ref(''); // 用户ID输入
-        const profileInfo = ref(''); // 用于存储和显示用户信息
-        const authToken = ref(localStorage.getItem('authToken')); // 从localStorage获取token
-        // console.log(authToken.value);
-        // 设置请求头的拦截器
-        axios.interceptors.request.use(config => {
-            if (authToken.value) {
-                config.headers.Authorization = `Bearer ${authToken.value}`;
-            }
-            return config;
-        }, error => {
-            return Promise.reject(error);
-        });
-        const fetchProfile = async () => {
-            if (!userId.value) {
-                alert('Please enter a user ID.');
-                return;
-            }
-
-            try {
-                const response = await axios.get(`http://joi.work/user/profile/${userId.value}`, {
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                profileInfo.value = JSON.stringify(response.data, null, 2); // 格式化输出
-            } catch (error) {
-                console.error('Failed to fetch profile:', error);
-                profileInfo.value = 'Failed to fetch profile.';
-            }
-        };
-
+        const { userId, profileInfo, fetchProfile } = UserInfoByid();
+        const { users, listUser } = UserList();
         return {
             userId,
             profileInfo,
-            fetchProfile
+            fetchProfile,
+            users,
+            listUser
         };
     }
 };
@@ -118,5 +108,21 @@ export default {
 
 .logout-button:hover {
     background-color: #e53935;
+}
+
+.pre-scrollable {
+    max-height: 200px;
+    /* 根据需要设置最大高度 */
+    overflow-y: auto;
+    /* 启用垂直滚动条 */
+    padding: 10px;
+    margin: 0;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    /* 保持空格和换行符 */
+    word-wrap: break-word;
+    /* 长单词换行 */
 }
 </style>
