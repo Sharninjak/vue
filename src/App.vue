@@ -14,6 +14,14 @@ export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  metaInfo() { // 设置页面meta信息
+    return {
+      title: this.$store.state.settings.dynamicTitle && this.$store.state.settings.title, // 动态标题
+      titleTemplate: title => {
+        return title ? `${title} - ${process.env.VUE_APP_TITLE}` : process.env.VUE_APP_TITLE; // 标题模板
+      }
+    };
   }
 }
 </script>
