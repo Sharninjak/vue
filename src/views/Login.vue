@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
 import axios from 'axios';
 import { useRouter } from 'vue-router';

@@ -4,7 +4,7 @@
         <button class="logout-button" @click="logoutAndRedirect">Logout</button>
         <el-card>
             <div class="input-area">
-                <el-input v-model="userId" placeholder="Enter user ID" clearable></el-input>
+                <el-input v-model="userId" placeholder="Enter user ID"></el-input>
                 <el-button type="primary" @click="fetchProfile">Fetch Profile</el-button>
             </div>
             <div class="output-area">
@@ -34,7 +34,7 @@ export default {
         title: 'Manage'
     },
     methods: {
-        // 退出登录并重定向到登录界面的方法
+        // 退出登录并重定向到登录界面
         logoutAndRedirect() {
             // 清除本地存储中的 token 或执行其他退出登录的逻辑
             localStorage.removeItem('authToken');
