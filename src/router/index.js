@@ -18,6 +18,11 @@ const routes = [
         path: '/manage',
         name: 'Manage',
         component: () => import('@/views/Manage.vue')
+    },
+    {
+        path: '/layout',
+        name: 'Layout',
+        component: () => import('@/views/layout.vue')
     }
 ];
 
@@ -27,6 +32,19 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
+});
+
+// 全局前置守卫
+router.beforeEach((to, from, next) => {
+    const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+    const isAuthenticated = !!localStorage.getItem('authToken');
+
+    if (requiresAuth && !isAuthenticated) {
+        // 如果用户未登录但尝试访问需要登录的页面，则重定向到登录页面
+        next('/login');
+    } else {
+        next(); // 允许访问当前页面
+    }
 });
 
 // 导出路由器实例

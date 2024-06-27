@@ -33,8 +33,6 @@ export default {
         const router = useRouter();
         const username = ref('');
         const password = ref('');
-
-
         const handleLogin = async () => {
             try {
                 const response = await axios.post('http://joi.work/user/login', {
@@ -69,7 +67,17 @@ export default {
         const cleanAuthHeader = () => {
             axios.interceptors.request.eject(authInterceptorId);
         };
-    },
+        // 获取拦截器 ID
+        let authInterceptorId = null;
+        if (!authInterceptorId) {
+            authInterceptorId = axios.interceptors.request.use(setAuthHeader(localStorage.getItem('authToken')), () => { });
+        }
+        return {
+            username,
+            password,
+            handleLogin
+        };
+    }
 };
 </script>
 
@@ -82,6 +90,4 @@ export default {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-/* 可以添加更多样式来美化表单 */
 </style>

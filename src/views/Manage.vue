@@ -1,4 +1,5 @@
 <template>
+
     <div class="profile-fetcher">
         <button class="logout-button" @click="logoutAndRedirect">Logout</button>
         <el-card>
@@ -23,6 +24,7 @@ import axios from 'axios';
 
 export default {
     name: 'Manage',
+    requiresAuth: true,
     components: {
         ElInput,
         ElButton,
