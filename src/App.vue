@@ -1,11 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <!-- 路由视图容器 -->
+    <div class="router-container">
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
+
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
@@ -13,6 +17,8 @@ export default {
   }
 }
 </script>
+
+
 
 <style>
 #app {
