@@ -16,9 +16,10 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
-import axios from 'axios'; // 使用axios库来简化fetch操作
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 export default {
     name: 'Login',
@@ -26,11 +27,13 @@ export default {
         ElForm,
         ElFormItem,
         ElInput,
-        ElButton
+        ElButton,
     },
     setup() {
-        const username = ref(''); // 用户名输入
-        const password = ref(''); // 密码输入
+        const router = useRouter();
+        const username = ref('');
+        const password = ref('');
+
 
         const handleLogin = async () => {
             try {
@@ -43,25 +46,30 @@ export default {
                         'Content-Type': 'application/json'
                     }
                 });
-
                 // 登录成功，处理响应数据
                 if (response.data.token) {
                     localStorage.setItem('authToken', response.data.token); // 保存token
                     // 执行其他登录成功后的操作，例如跳转到主页
-                    console.log('Login successful:', response.data);
+                    router.push('/manage'); // 跳转到管理页面
                 }
             } catch (error) {
                 console.error('Login failed:', error);
                 // 处理错误，例如显示错误消息
             }
         };
-
-        return {
-            username,
-            password,
-            handleLogin
+        // 设置请求头的拦截器
+        const setAuthHeader = (token) => {
+            axios.interceptors.request.use(config => {
+                config.headers.Authorization = `Bearer ${token}`;
+                return config;
+            }, error => {
+                return Promise.reject(error);
+            });
         };
-    }
+        const cleanAuthHeader = () => {
+            axios.interceptors.request.eject(authInterceptorId);
+        };
+    },
 };
 </script>
 
@@ -74,4 +82,6 @@ export default {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+/* 可以添加更多样式来美化表单 */
 </style>

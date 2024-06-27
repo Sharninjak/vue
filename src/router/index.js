@@ -1,19 +1,23 @@
 // 导入 Vue 和 Vue Router
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '@/views/Home.vue';
-import Login from '@/views/Login.vue';
+
 
 // 创建路由对象
 const routes = [
     {
         path: '/', // Vue 3 中路径应该是字符串
         name: 'Home',
-        component: Home
+        component: () => import('@/views/Home.vue')
     },
     {
         path: '/login', // 同样，路径应该是字符串
         name: 'Login',
-        component: Login
+        component: () => import('@/views/Login.vue')
+    },
+    {
+        path: '/manage',
+        name: 'Manage',
+        component: () => import('@/views/Manage.vue')
     }
 ];
 
