@@ -45,7 +45,17 @@ export default {
     setup() {
         const userId = ref(''); // 用户ID输入
         const profileInfo = ref(''); // 用于存储和显示用户信息
-
+        const authToken = ref(localStorage.getItem('authToken')); // 从localStorage获取token
+        // console.log(authToken.value);
+        // 设置请求头的拦截器
+        axios.interceptors.request.use(config => {
+            if (authToken.value) {
+                config.headers.Authorization = `Bearer ${authToken.value}`;
+            }
+            return config;
+        }, error => {
+            return Promise.reject(error);
+        });
         const fetchProfile = async () => {
             if (!userId.value) {
                 alert('Please enter a user ID.');

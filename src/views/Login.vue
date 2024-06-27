@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
@@ -55,23 +55,6 @@ export default {
                 // 处理错误，例如显示错误消息
             }
         };
-        // 设置请求头的拦截器
-        const setAuthHeader = (token) => {
-            axios.interceptors.request.use(config => {
-                config.headers.Authorization = `Bearer ${token}`;
-                return config;
-            }, error => {
-                return Promise.reject(error);
-            });
-        };
-        const cleanAuthHeader = () => {
-            axios.interceptors.request.eject(authInterceptorId);
-        };
-        // 获取拦截器 ID
-        let authInterceptorId = null;
-        if (!authInterceptorId) {
-            authInterceptorId = axios.interceptors.request.use(setAuthHeader(localStorage.getItem('authToken')), () => { });
-        }
         return {
             username,
             password,
