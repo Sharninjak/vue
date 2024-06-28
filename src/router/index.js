@@ -5,12 +5,12 @@ import { createRouter, createWebHistory } from 'vue-router';
 // 创建路由对象
 const routes = [
     {
-        path: '/', // Vue 3 中路径应该是字符串
+        path: '/',
         name: 'Home',
         component: () => import('@/views/Home.vue')
     },
     {
-        path: '/login', // 同样，路径应该是字符串
+        path: '/login',
         name: 'Login',
         component: () => import('@/views/Login.vue')
     },

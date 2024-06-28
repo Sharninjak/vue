@@ -32,7 +32,7 @@
         <el-card>
             <h3>User Register</h3>
             <div class="input-area">
-                <el-button type="primary" @click="register">Register</el-button>
+                <el-button type="primary" @click="registerUser">Register</el-button>
                 <el-input v-model="username" placeholder="Username"></el-input>
                 <el-input v-model="password" placeholder="Password"></el-input>
             </div>
