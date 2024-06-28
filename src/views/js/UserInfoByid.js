@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+
 export function UserInfoByid() {
     const userId = ref(''); // 用户ID输入
     const profileInfo = ref(''); // 用于存储和显示用户信息
@@ -40,4 +41,3 @@ export function UserInfoByid() {
         fetchProfile,
     };
 }
-

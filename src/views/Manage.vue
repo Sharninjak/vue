@@ -28,17 +28,23 @@
                     </div>
                 </el-card>
             </div>
-
+        </el-card>
+        <el-card>
+            <h3>User Register</h3>
+            <div class="input-area">
+                <el-button type="primary" @click="register">Register</el-button>
+                <el-input v-model="username" placeholder="Username"></el-input>
+                <el-input v-model="password" placeholder="Password"></el-input>
+            </div>
         </el-card>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue';
 import { ElInput, ElButton, ElCard } from 'element-plus';
-import axios from 'axios';
 import { UserInfoByid } from './js/UserInfoByid';
 import { UserList } from './js/UserList';
+import { Register } from './js/Register';
 
 export default {
     name: 'Manage',
@@ -63,12 +69,16 @@ export default {
     setup() {
         const { userId, profileInfo, fetchProfile } = UserInfoByid();
         const { users, listUser } = UserList();
+        const { username, password, registerUser } = Register();
         return {
             userId,
             profileInfo,
             fetchProfile,
             users,
-            listUser
+            listUser,
+            username,
+            password,
+            registerUser
         };
     }
 };
@@ -112,9 +122,7 @@ export default {
 
 .pre-scrollable {
     max-height: 200px;
-    /* 根据需要设置最大高度 */
     overflow-y: auto;
-    /* 启用垂直滚动条 */
     padding: 10px;
     margin: 0;
     background-color: #f5f5f5;
