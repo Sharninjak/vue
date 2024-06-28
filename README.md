@@ -3,6 +3,7 @@
 ## Project setup
 ```
 npm install
+npm install element-plus --save
 ```
 
 ### Compiles and hot-reloads for development

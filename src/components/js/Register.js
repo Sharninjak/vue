@@ -1,6 +1,5 @@
 import { ref } from 'vue';
 import axios from 'axios';
-import { ElMessage } from 'element-plus';
 
 export function Register() {
     const username = ref('');
@@ -10,7 +9,6 @@ export function Register() {
         // 确保输入不为空
         if (!username.value || !password.value) {
             alert('Please enter username and password.');
-            ElMessage.error('Username and password are required.');
             return;
         }
 
@@ -25,19 +23,15 @@ export function Register() {
                     'Content-Type': 'application/json'
                 }
             });
-
-            // 检查响应数据中的 success 字段
-            if (response.data.success) {
-                ElMessage.success('User registered successfully');
+            console.log(response.data);
+            if (response.data.token) {
+                alert('Registration successful');
                 // 可能需要重定向或执行其他操作
-            } else {
-                // 服务器返回了错误信息
-                ElMessage.error(response.data.message || 'Registration failed');
             }
         } catch (error) {
             // 捕获并显示错误信息
             console.error('Registration failed:', error);
-            ElMessage.error('An error occurred during registration.');
+            alert(error.response.data.error);
         }
     };
 

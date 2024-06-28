@@ -21,7 +21,6 @@ export function UserInfoByid() {
             alert('Please enter a user ID.');
             return;
         }
-
         try {
             const response = await axios.get(`http://joi.work/user/profile/${userId.value}`, {
                 headers: {

@@ -37,14 +37,22 @@
                 <el-input v-model="password" placeholder="Password"></el-input>
             </div>
         </el-card>
+        <el-card>
+            <h3>Delete User</h3>
+            <div class="input-area">
+                <el-button type="primary" @click="deleteUser">Delete User</el-button>
+                <el-input v-model="deleteUserId" placeholder="user ID"></el-input>
+            </div>
+        </el-card>
     </div>
 </template>
 
 <script>
 import { ElInput, ElButton, ElCard } from 'element-plus';
-import { UserInfoByid } from './js/UserInfoByid';
-import { UserList } from './js/UserList';
-import { Register } from './js/Register';
+import { UserInfoByid } from '../components/js/UserInfoByid';
+import { UserList } from '../components/js/UserList';
+import { Register } from '../components/js/Register';
+import { DeleteUser } from '../components/js/DeleteUser';
 
 export default {
     name: 'Manage',
@@ -70,6 +78,7 @@ export default {
         const { userId, profileInfo, fetchProfile } = UserInfoByid();
         const { users, listUser } = UserList();
         const { username, password, registerUser } = Register();
+        const { deleteUserId, deleteUser } = DeleteUser();
         return {
             userId,
             profileInfo,
@@ -78,7 +87,9 @@ export default {
             listUser,
             username,
             password,
-            registerUser
+            registerUser,
+            deleteUserId,
+            deleteUser
         };
     }
 };
